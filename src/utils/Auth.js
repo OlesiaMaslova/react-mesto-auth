@@ -10,7 +10,6 @@ const checkResponse = (response) => {
  }
 
 export const register = ({password, email}) => {
-    console.log({password, email})
     return fetch(`${URL}/signup`, {
         headers:{
             'Accept': 'application/json',
@@ -34,7 +33,7 @@ export const authorize = ({password, email}) => {
     .then(res => checkResponse(res));
 }
 
-export const getContent = (jwt) => {
+export const tokenCheck = (jwt) => {
     
     return fetch(`${URL}/users/me`, {
         headers: {
