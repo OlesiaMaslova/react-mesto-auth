@@ -1,0 +1,4 @@
+.card__delete-button_state_hidden {
+    visibility: hidden;
+    width: 100px;
+}

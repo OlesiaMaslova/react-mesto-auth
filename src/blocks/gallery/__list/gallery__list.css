@@ -1,0 +1,27 @@
+.gallery__list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(282px, 1fr));
+    gap: 17px;
+}
+
+@media screen and (max-width:768px) {
+    .gallery__list {
+        gap:19px;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width:889px) {
+    .gallery__list {
+        padding-left: 97px;
+    }
+}
+
+@media screen and (min-width: 890px) and (max-width:915px) {
+    .gallery__list {
+        padding-left: 145px;
+        padding-right: 135px;
+    }
+}

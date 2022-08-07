@@ -1,0 +1,10 @@
+.access-form__register-message {
+    display: flex;
+    margin-top: 15px;
+}
+.register__message-text {
+    margin: 0;
+}
+
+
+

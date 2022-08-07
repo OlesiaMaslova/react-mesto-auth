@@ -1,0 +1,11 @@
+.access-form__input {
+    border:none;
+    border-bottom: 2px solid #CCCCCC;
+    width: 358px;
+    height: 27px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.2;
+    background: transparent;
+    margin-bottom: 30px;
+}
