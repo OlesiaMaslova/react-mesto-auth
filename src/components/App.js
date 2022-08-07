@@ -24,7 +24,7 @@ function App() {
     const [isEditProfilePopupOpen, setEditProfileOpen] = React.useState(false);
     const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
     const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
-    const [isInfoTooltipOpen, setInfoTooltipOpen] = React.useState(false);
+    const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
     const [signupSuccess, setSignupSuccess] = React.useState(false);
 
     const [selectedCard, setSelectedCard] = React.useState({ name: '', link: '' });
@@ -53,7 +53,7 @@ function App() {
         setEditAvatarPopupOpen(false);
         setEditProfileOpen(false);
         setAddPlacePopupOpen(false);
-        setInfoTooltipOpen(false);
+        setIsInfoTooltipOpen(false);
         setSelectedCard({ name: '', link: '' });
 
     }
@@ -118,6 +118,23 @@ function App() {
             })
     }, [])
 
+    const isOpen = isEditAvatarPopupOpen || isEditProfilePopupOpen || isAddPlacePopupOpen || selectedCard.link
+
+    React.useEffect(() => {
+        function closeByEscape(evt) {
+        if(evt.key === 'Escape') {
+            closeAllPopups();
+        }
+        }
+        if(isOpen) {
+        document.addEventListener('keydown', closeByEscape);
+        return () => {
+            document.removeEventListener('keydown', closeByEscape);
+        }
+        }
+    }, [isOpen]) 
+    
+
 
     const [cards, setCards] = React.useState([]);
 
@@ -133,12 +150,13 @@ function App() {
     }
 
     function handleCardDelete(card) {
-        api.deleteCard(card).then((card) => {
-            setCards((state) => state.filter((c) => c._id !== card._id));
+        api.deleteCard(card).then(() => {
+            setCards((cards) => cards.filter((c) => c._id !== card._id));
         })
             .catch((err) => {
                 console.log(`Ошибка: ${err}`);
             })
+            
     }
 
     React.useEffect(() => {
@@ -160,17 +178,17 @@ function App() {
     }, [isLoggedIn]);
 
     React.useEffect(() => {
-        getContent();
+        getTokenChecked();
 
     }, []);
 
-    function getContent() {
+    function getTokenChecked() {
         const jwt = localStorage.getItem('token');
 
         if (!jwt) {
             return;
         }
-        auth.tokenCheck(jwt)
+        auth.checkToken(jwt)
             .then((data) => {
                 setIsLoggedIn(true);
                 setUserData(data.data);
@@ -182,10 +200,10 @@ function App() {
     }
 
     function onLogin(data) {
-
         return auth.authorize(data)
             .then(({ token }) => {
                 setIsLoggedIn(true);
+                setUserData(data)
                 localStorage.setItem('token', token);
             })
             .catch((err) => {
@@ -199,26 +217,21 @@ function App() {
         history.push('/signin');
     }
 
-    function forwardSignup() {
-        history.push('/signup')
-    }
 
-    function forwardSignin() {
-        history.push('/signin')
-    }
 
     function onRegister(data) {
 
         return auth.register(data)
             .then(() => {
                 setSignupSuccess(true);
-                setInfoTooltipOpen(true);
                 history.push('/signin');
             })
             .catch((err) => {
                 console.log(err);
                 setSignupSuccess(false);
-                setInfoTooltipOpen(true);
+            })
+            .finally(() => {
+                setIsInfoTooltipOpen(true);  
             })
     }
 
@@ -230,7 +243,7 @@ function App() {
         <div className="App">
             <CurrentUserContext.Provider value={currentUser}>
 
-                <Header userData={userData} onLogout={onLogout} isLoggedIn={isLoggedIn} location={location} onForwardSignin={forwardSignin} onForwardSignup={forwardSignup} />
+                <Header userData={userData} onLogout={onLogout}/>
                 <Switch>
                     <ProtectedRoute
                         exact path="/"

@@ -52,7 +52,8 @@ function EditProfilePopup(props) {
             buttonName={props.isLoading ? 'Сохранение...' : 'Сохранить'}
             isOpen={props.isOpen}
             onClosePopup={props.onClose}
-            onSubmit={handleSubmit}><div><label className="popup__label">
+            onSubmit={handleSubmit}>
+            <label className="popup__label">
                 <input className="popup__input popup__input_username"
                     id="username-input"
                     type="text"
@@ -62,16 +63,17 @@ function EditProfilePopup(props) {
                     minLength="2" maxLength="40" required />
                 <span className="popup__error" id="username-input-error">{errorMessageName}</span>
             </label>
-                <label className="popup__label">
-                    <input className="popup__input popup__input_job"
-                        id="job-input"
-                        type="text"
-                        value={description || ''}
-                        onChange={handleDescriptionChange}
-                        name="about"
-                        minLength="2" maxLength="200" required />
-                    <span className="popup__error" id="job-input-error">{errorMessageDescription}</span>
-                </label></div></PopupWithForm>
+            <label className="popup__label">
+                <input className="popup__input popup__input_job"
+                    id="job-input"
+                    type="text"
+                    value={description || ''}
+                    onChange={handleDescriptionChange}
+                    name="about"
+                    minLength="2" maxLength="200" required />
+                <span className="popup__error" id="job-input-error">{errorMessageDescription}</span>
+            </label>
+        </PopupWithForm>
 
     )
 

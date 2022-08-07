@@ -33,7 +33,7 @@ export const authorize = ({password, email}) => {
     .then(res => checkResponse(res));
 }
 
-export const tokenCheck = (jwt) => {
+export const checkToken = (jwt) => {
     
     return fetch(`${URL}/users/me`, {
         headers: {

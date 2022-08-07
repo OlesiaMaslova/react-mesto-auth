@@ -49,18 +49,18 @@ function AddNewCardPopup(props) {
             buttonName={props.isLoading ? 'Сохранение...' : 'Создать'}
             isOpen={props.isOpen}
             onClosePopup={props.onClose}
-            onSubmit={handleCardSumbit}
-        ><div><label className="popup__label">
-            <input className="popup__input popup__input_picture-name"
-                id="picture-input"
-                value={name}
-                onChange={handleChangeName}
-                type="text"
-                name="name"
-                placeholder="Название"
-                minLength="2" maxLength="30" required />
-            <span className="popup__error" id="picture-input-error">{errorMessageName}</span>
-        </label>
+            onSubmit={handleCardSumbit}>
+                <label className="popup__label">
+                <input className="popup__input popup__input_picture-name"
+                    id="picture-input"
+                    value={name}
+                    onChange={handleChangeName}
+                    type="text"
+                    name="name"
+                    placeholder="Название"
+                    minLength="2" maxLength="30" required />
+                <span className="popup__error" id="picture-input-error">{errorMessageName}</span>
+                </label>
                 <label className="popup__label">
                     <input className="popup__input popup__input_picture-link"
                         id="link-input"
@@ -70,7 +70,8 @@ function AddNewCardPopup(props) {
                         name="link"
                         placeholder="Ссылка на картинку" required />
                     <span className="popup__error" id="link-input-error">{errorMessageLink}</span>
-                </label></div></PopupWithForm>
+                </label>
+        </PopupWithForm>
     )
 }
 
